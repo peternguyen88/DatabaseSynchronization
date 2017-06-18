@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306/gmat_zero_to_hero</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+
+        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+
+        <property name="connection.username">root</property>
+        <property name="connection.password"></property>
+        <!-- DB schema will be updated if needed -->
+        <property name="show_sql">true</property>
+        <property name="format_sql">false</property>
+
+        <mapping class="com.zeth.Question_pack"></mapping>
+        <mapping class="com.zeth.Question_set"></mapping>
+        <mapping class="com.zeth.Question"></mapping>
+
+    </session-factory>
+</hibernate-configuration>
