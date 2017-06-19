@@ -17,6 +17,9 @@ public class Question_pack {
     boolean is_test_pack;
 
     @Column
+    int pack_oder;
+
+    @Column
     boolean is_practice_pack;
 
     public Question_pack(String pack_no){

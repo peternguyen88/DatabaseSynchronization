@@ -17,6 +17,9 @@ public class Question_set {
     int number_of_questions;
 
     @Column
+    int order_in_pack;
+
+    @Column
     String pack_no;
 
     public Question_set(String set_no){

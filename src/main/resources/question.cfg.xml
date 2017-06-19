@@ -1,38 +1,56 @@
-<gmat-zero-to-hero base_link="C:/Users/Peter/WebstormProjects/GMAT Test/Angular4_CLI_Starter/src/assets/">
-    <pack pack_no="OG15">
+<gmat-zero-to-hero>
+    <pack pack_no="OG15" pack_oder="1">
         <pack_description>Official Guide 2015</pack_description>
         <is_test_pack>false</is_test_pack>
         <is_practice_pack>true</is_practice_pack>
 
-        <set set_no="OG15-SC">
+        <set set_no="OG15-SC" order_in_pack="1">
             <set_description>OG15 - Sentence Correction</set_description>
             <link>practices/OG15/sc.txt</link>
         </set>
-        <set set_no="OG15-CR">
+        <set set_no="OG15-CR" order_in_pack="2">
             <set_description>OG15 - Critical Reasoning</set_description>
             <link>practices/OG15/cr.txt</link>
         </set>
-        <set set_no="OG15-RC">
+        <set set_no="OG15-RC" order_in_pack="3">
             <set_description>OG15 - Reading Comprehension</set_description>
             <link>practices/OG15/rc.txt</link>
         </set>
     </pack>
-    <pack pack_no="VR15">
+    <pack pack_no="VR15" pack_oder="2">
         <pack_description>Verbal Review 2015</pack_description>
         <is_test_pack>false</is_test_pack>
         <is_practice_pack>true</is_practice_pack>
 
-        <set set_no="VR15-SC">
+        <set set_no="VR15-SC" order_in_pack="1">
             <set_description>VR15 - Sentence Correction</set_description>
             <link>practices/VR15/sc.txt</link>
         </set>
-        <set set_no="VR15-CR">
+        <set set_no="VR15-CR" order_in_pack="2">
             <set_description>VR15 - Critical Reasoning</set_description>
             <link>practices/VR15/cr.txt</link>
         </set>
-        <set set_no="VR15-RC">
+        <set set_no="VR15-RC" order_in_pack="3">
             <set_description>VR15 - Reading Comprehension</set_description>
             <link>practices/VR15/rc.txt</link>
+        </set>
+    </pack>
+    <pack pack_no="QP1" pack_oder="3">
+        <pack_description>Question Pack 1 - GMAC</pack_description>
+        <is_test_pack>false</is_test_pack>
+        <is_practice_pack>true</is_practice_pack>
+
+        <set set_no="QP1-SC" order_in_pack="1">
+            <set_description>QP1 - Sentence Correction</set_description>
+            <link>practices/QP1/sc.txt</link>
+        </set>
+        <set set_no="QP1-CR" order_in_pack="2">
+            <set_description>QP1 - Critical Reasoning</set_description>
+            <link>practices/QP1/cr.txt</link>
+        </set>
+        <set set_no="QP1-RC" order_in_pack="3">
+            <set_description>VR15 - Reading Comprehension</set_description>
+            <link>practices/QP1/rc.txt</link>
         </set>
     </pack>
 </gmat-zero-to-hero>

@@ -20,6 +20,9 @@ public class Question {
     String question_no;
 
     @Column
+    int question_order;
+
+    @Column
     String question_type;
 
     @Column

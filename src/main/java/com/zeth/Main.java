@@ -43,7 +43,7 @@ public class Main {
 
         System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
-        String base_link = doc.getDocumentElement().getAttribute("base_link");
+        String base_link = getBaseLink();
 
         NodeList nList = doc.getElementsByTagName("pack");
 
@@ -52,17 +52,18 @@ public class Main {
             System.out.println("\nCurrent Element :" + packNode.getNodeName());
 
             if (packNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) packNode;
+                Element packElement = (Element) packNode;
 
-                System.out.println("Pack No : " + eElement.getAttribute("pack_no"));
-                System.out.println("Pack Description : " + eElement.getElementsByTagName("pack_description").item(0).getTextContent());
+                System.out.println("Pack No : " + packElement.getAttribute("pack_no"));
+                System.out.println("Pack Description : " + packElement.getElementsByTagName("pack_description").item(0).getTextContent());
 
-                Question_pack pack = getQuestion_pack(session, eElement.getAttribute("pack_no"));
-                pack.pack_description = eElement.getElementsByTagName("pack_description").item(0).getTextContent();
-                pack.is_practice_pack = StringUtils.equalsIgnoreCase(eElement.getElementsByTagName("is_practice_pack").item(0).getTextContent(), "true");
-                pack.is_test_pack = StringUtils.equalsIgnoreCase(eElement.getElementsByTagName("is_test_pack").item(0).getTextContent(), "true");
+                Question_pack pack = getQuestion_pack(session, packElement.getAttribute("pack_no"));
+                pack.pack_description = packElement.getElementsByTagName("pack_description").item(0).getTextContent();
+                pack.pack_oder = Integer.parseInt(packElement.getAttribute("pack_oder"));
+                pack.is_practice_pack = StringUtils.equalsIgnoreCase(packElement.getElementsByTagName("is_practice_pack").item(0).getTextContent(), "true");
+                pack.is_test_pack = StringUtils.equalsIgnoreCase(packElement.getElementsByTagName("is_test_pack").item(0).getTextContent(), "true");
 
-                NodeList setList = eElement.getElementsByTagName("set");
+                NodeList setList = packElement.getElementsByTagName("set");
 
                 for (int setIndex = 0; setIndex < setList.getLength(); setIndex++) {
                     Node setNode = setList.item(setIndex);
@@ -71,7 +72,9 @@ public class Main {
                     if (setNode.getNodeType() == Node.ELEMENT_NODE) {
                         Element setElement = (Element) setNode;
                         Question_set set = getQuestion_set(session, setElement.getAttribute("set_no"));
+                        set.order_in_pack = Integer.parseInt(setElement.getAttribute("order_in_pack"));
                         set.set_description = setElement.getElementsByTagName("set_description").item(0).getTextContent();
+
                         set.pack_no = pack.pack_no;
 
                         String setURL = setElement.getElementsByTagName("link").item(0).getTextContent();
@@ -109,8 +112,9 @@ public class Main {
             System.out.println(lines[0]);
             List<String> firstLine = Arrays.stream(lines[0].split("#")).map(String::trim).filter(StringUtils::isNotEmpty).collect(Collectors.toList());
 
-            Question question = getQuestion(session, set.pack_no, set.set_no, firstLine.get(1));
+            Question question = getQuestion(session, set.pack_no, set.set_no, Integer.parseInt(firstLine.get(3)));
             question.question_type = firstLine.get(0);
+            question.question_no = firstLine.get(1);
             question.correct_answer = firstLine.get(2);
 
             int lineIndex = 1;
@@ -147,22 +151,27 @@ public class Main {
         return set;
     }
 
-    private static Question getQuestion(Session session, String pack_no, String set_no, String question_no){
-        String query = "SELECT e FROM Question e WHERE e.pack_no = :pack_no AND e.set_no = :set_no AND e.question_no = :question_no";
+    private static Question getQuestion(Session session, String pack_no, String set_no, int question_order){
+        String query = "SELECT e FROM Question e WHERE e.pack_no = :pack_no AND e.set_no = :set_no AND e.question_order = :question_order";
 
-        List<Question> questions = session.createQuery(query, Question.class).setParameter("pack_no", pack_no).setParameter("set_no", set_no).setParameter("question_no", question_no)
+        List<Question> questions = session.createQuery(query, Question.class).setParameter("pack_no", pack_no).setParameter("set_no", set_no).setParameter("question_order", question_order)
                 .list();
 
         if(questions.isEmpty()){
             Question question = new Question();
             question.pack_no = pack_no;
             question.set_no = set_no;
-            question.question_no = question_no;
+            question.question_order = question_order;
 
             return question;
         }
         else{
             return questions.get(0);
         }
+    }
+
+    private static String getBaseLink() throws IOException {
+        String line = new String(Files.readAllBytes(Paths.get("src/main/resources/.evn")));
+        return line.substring(line.indexOf("=")+1);
     }
 }
